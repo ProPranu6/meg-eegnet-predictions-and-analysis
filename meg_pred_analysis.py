@@ -356,7 +356,7 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from seaborn import scatterplot
 
-def tsne_visualise(subx=[], suby=[], focus_on='train', skip_pca=False, hue_type='label', style_type='class'):
+def tsne_visualise(subx=[], suby=[], focus_on='train', skip_pca=False, hue_type='label', style_type='class', per=40, iter=300):
 
   global SAVE_DATAX, SAVE_DATAY
   subx_id = 0
@@ -424,7 +424,7 @@ def tsne_visualise(subx=[], suby=[], focus_on='train', skip_pca=False, hue_type=
     pca_result = pca.fit_transform(X)
 
   
-  tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300)
+  tsne = TSNE(n_components=2, verbose=1, perplexity=per, n_iter=iter)
   tsne_result = tsne.fit_transform(pca_result)
 
   X = tsne_result
