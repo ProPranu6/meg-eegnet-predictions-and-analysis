@@ -62,7 +62,7 @@ from sklearn.metrics import precision_recall_fscore_support
 from matplotlib import pyplot as plt
 from collections import Counter
 
-def get_subject_data(subject_numbers=[4], mod=False, print_info=True, norm=False):
+def get_subject_data(subject_numbers=[4], mod=False, print_info=True, norm=False, scale=True):
   #class 0 for ani and class 1 for ina
   global chans, samples, kernels
 
@@ -127,7 +127,9 @@ def get_subject_data(subject_numbers=[4], mod=False, print_info=True, norm=False
   #768*50*141*1
   if norm:
     X_train, X_validate, X_test = X_train/np.linalg.norm(X_train, axis=0, keepdims=True),X_validate/np.linalg.norm(X_validate, axis=0, keepdims=True),X_test/np.linalg.norm(X_test, keepdims=True, axis=0) #ADDED NORMALIZATION HERE
-  return X_train, X_validate, X_test, Y_train, Y_validate, Y_test
+  if scale:
+    X_train, X_validate, X_test = X_train*100000, X_validate*100000, X_test*100000  #added scaling
+return X_train, X_validate, X_test, Y_train, Y_validate, Y_test
 
 #model-evaluation function
 def evaluate_model(model, xtest, ytest, xval, yval, xtrain, ytrain):
