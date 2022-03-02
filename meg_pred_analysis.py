@@ -136,7 +136,8 @@ def evaluate_model(model, xtest, ytest, xval, yval, xtrain, ytrain):
   ytest = ytest.argmax(axis=-1)
   yval = yval.argmax(axis=-1)
   ytrain = ytrain.argmax(axis=-1)
-
+  
+  model.load_weights('/tmp/checkpoint.h5')
   preds_train = model.predict(xtrain).argmax(axis=-1)
   preds_val = model.predict(xval).argmax(axis=-1)
   acc_train = np.mean(preds_train == ytrain)
@@ -145,7 +146,7 @@ def evaluate_model(model, xtest, ytest, xval, yval, xtrain, ytrain):
   print("Train Classification accuracy: %f " % (acc_train))
   print("Validation Classification accuracy: %f " % (acc_val))
 
-  model.load_weights('/tmp/checkpoint.h5')
+  
   probs       = model.predict(xtest)
   preds       = probs.argmax(axis = -1)  
   acc_test         = np.mean(preds == ytest)
